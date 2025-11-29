@@ -1,7 +1,7 @@
 // app/portfolio/page.tsx
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useMemo, useState } from 'react';
 import { useTheme } from '@/components/ThemeContext';
 import { MagneticCursor } from '@/components/ui/MagneticCursor';
 import { AnimatedHeader } from '@/components/layout/AnimatedHeader';
@@ -10,96 +10,82 @@ import { SEOHead } from '@/components/seo/SEOHead';
 import { AnalyticsTracker } from '@/components/monitoring/AnalyticsTracker';
 import { motion } from 'framer-motion';
 
+const projects = [
+  {
+    id: 1,
+    title: 'E-commerce Automation',
+    category: 'N8N',
+    description: 'Automated workflow for inventory management',
+    technologies: ['N8N', 'Shopify', 'Stripe'],
+    gradient: 'from-blue-500 to-indigo-600'
+  },
+  {
+    id: 2,
+    title: 'AI Chatbot',
+    category: 'Chatbot',
+    description: 'Intelligent conversational interface',
+    technologies: ['Dialogflow', 'TensorFlow', 'React'],
+    gradient: 'from-purple-500 to-pink-600'
+  },
+  {
+    id: 3,
+    title: 'Corporate Website',
+    category: 'Web Design',
+    description: 'Modern responsive corporate website',
+    technologies: ['Next.js', 'Tailwind', 'GraphQL'],
+    gradient: 'from-amber-500 to-orange-600'
+  },
+  {
+    id: 4,
+    title: 'SEO Campaign',
+    category: 'SEO',
+    description: 'Complete SEO strategy implementation',
+    technologies: ['Google Analytics', 'Ahrefs', 'Schema'],
+    gradient: 'from-green-500 to-teal-600'
+  },
+  {
+    id: 5,
+    title: 'WordPress Migration',
+    category: 'WordPress',
+    description: 'Large-scale content migration project',
+    technologies: ['WordPress', 'PHP', 'MySQL'],
+    gradient: 'from-indigo-500 to-blue-600'
+  },
+  {
+    id: 6,
+    title: 'Shopify Plus Store',
+    category: 'Shopify',
+    description: 'Enterprise e-commerce solution',
+    technologies: ['Shopify Plus', 'React', 'Node.js'],
+    gradient: 'from-rose-500 to-red-600'
+  }
+];
+
+const portfolioDescription = 'Explore our portfolio of successful digital projects. See our work in N8N Automations, Chatbot Development, Web Design, WordPress, Shopify, and SEO. Discover how we\'ve transformed businesses with our solutions.';
+
+const portfolioKeywords = [
+  'portfolio',
+  'case studies',
+  'web design portfolio',
+  'n8n automation examples',
+  'chatbot projects',
+  'shopify stores',
+  'wordpress sites',
+  'seo case studies',
+  'digital solutions portfolio'
+];
+
 export default function PortfolioPage() {
-  const [mounted, setMounted] = useState(false);
   const { isDark } = useTheme();
   const [selectedCategory, setSelectedCategory] = useState('All');
 
-  const projects = [
-    {
-      id: 1,
-      title: 'E-commerce Automation',
-      category: 'N8N',
-      description: 'Automated workflow for inventory management',
-      technologies: ['N8N', 'Shopify', 'Stripe'],
-      gradient: 'from-blue-500 to-indigo-600'
-    },
-    {
-      id: 2,
-      title: 'AI Chatbot',
-      category: 'Chatbot',
-      description: 'Intelligent conversational interface',
-      technologies: ['Dialogflow', 'TensorFlow', 'React'],
-      gradient: 'from-purple-500 to-pink-600'
-    },
-    {
-      id: 3,
-      title: 'Corporate Website',
-      category: 'Web Design',
-      description: 'Modern responsive corporate website',
-      technologies: ['Next.js', 'Tailwind', 'GraphQL'],
-      gradient: 'from-amber-500 to-orange-600'
-    },
-    {
-      id: 4,
-      title: 'SEO Campaign',
-      category: 'SEO',
-      description: 'Complete SEO strategy implementation',
-      technologies: ['Google Analytics', 'Ahrefs', 'Schema'],
-      gradient: 'from-green-500 to-teal-600'
-    },
-    {
-      id: 5,
-      title: 'WordPress Migration',
-      category: 'WordPress',
-      description: 'Large-scale content migration project',
-      technologies: ['WordPress', 'PHP', 'MySQL'],
-      gradient: 'from-indigo-500 to-blue-600'
-    },
-    {
-      id: 6,
-      title: 'Shopify Plus Store',
-      category: 'Shopify',
-      description: 'Enterprise e-commerce solution',
-      technologies: ['Shopify Plus', 'React', 'Node.js'],
-      gradient: 'from-rose-500 to-red-600'
-    }
-  ];
-
   const categories = ['All', 'N8N', 'Chatbot', 'Web Design', 'WordPress', 'Shopify', 'SEO'];
 
-  const filteredProjects = selectedCategory === 'All'
-    ? projects
-    : projects.filter(project => project.category === selectedCategory);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
-          <p className="mt-4 text-gray-600 dark:text-gray-400">Loading portfolio...</p>
-        </div>
-      </div>
-    );
-  }
-
-  const portfolioDescription = 'Explore our portfolio of successful digital projects. See our work in N8N Automations, Chatbot Development, Web Design, WordPress, Shopify, and SEO. Discover how we\'ve transformed businesses with our solutions.';
-
-  const portfolioKeywords = [
-    'portfolio',
-    'case studies',
-    'web design portfolio',
-    'n8n automation examples',
-    'chatbot projects',
-    'shopify stores',
-    'wordpress sites',
-    'seo case studies',
-    'digital solutions portfolio'
-  ];
+  const filteredProjects = useMemo(() => (
+    selectedCategory === 'All'
+      ? projects
+      : projects.filter(project => project.category === selectedCategory)
+  ), [selectedCategory]);
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
