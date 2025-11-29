@@ -13,21 +13,7 @@ import { motion } from 'framer-motion';
 export default function PortfolioPage() {
   const [mounted, setMounted] = useState(false);
   const { isDark } = useTheme();
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
-          <p className="mt-4 text-gray-600 dark:text-gray-400">Loading portfolio...</p>
-        </div>
-      </div>
-    );
-  }
+  const [selectedCategory, setSelectedCategory] = useState('All');
 
   const projects = [
     {
@@ -80,12 +66,26 @@ export default function PortfolioPage() {
     }
   ];
 
-  const [selectedCategory, setSelectedCategory] = useState('All');
   const categories = ['All', 'N8N', 'Chatbot', 'Web Design', 'WordPress', 'Shopify', 'SEO'];
 
   const filteredProjects = selectedCategory === 'All'
     ? projects
     : projects.filter(project => project.category === selectedCategory);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return (
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
+          <p className="mt-4 text-gray-600 dark:text-gray-400">Loading portfolio...</p>
+        </div>
+      </div>
+    );
+  }
 
   const portfolioDescription = 'Explore our portfolio of successful digital projects. See our work in N8N Automations, Chatbot Development, Web Design, WordPress, Shopify, and SEO. Discover how we\'ve transformed businesses with our solutions.';
 
