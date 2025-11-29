@@ -87,16 +87,31 @@ export default function PortfolioPage() {
     ? projects
     : projects.filter(project => project.category === selectedCategory);
 
+  const portfolioDescription = 'Explore our portfolio of successful digital projects. See our work in N8N Automations, Chatbot Development, Web Design, WordPress, Shopify, and SEO. Discover how we\'ve transformed businesses with our solutions.';
+
+  const portfolioKeywords = [
+    'portfolio',
+    'case studies',
+    'web design portfolio',
+    'n8n automation examples',
+    'chatbot projects',
+    'shopify stores',
+    'wordpress sites',
+    'seo case studies',
+    'digital solutions portfolio'
+  ];
+
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
       <SEOHead
         title="Portfolio - Rising Dot Agency"
-        description="Explore our portfolio of successful digital projects. See our work in N8N Automations, Chatbot Development, Web Design, WordPress, Shopify, and SEO. Discover how we've transformed businesses with our solutions."
+        description={portfolioDescription}
         path="/portfolio"
         type="website"
-        keywords={['portfolio', 'case studies', 'web design portfolio', 'n8n automation examples', 'chatbot projects', 'shopify stores', 'wordpress sites', 'seo case studies', 'digital solutions portfolio']},
+        keywords={portfolioKeywords}
         author="Rising Dot Agency"
       />
+
       <AnalyticsTracker
         pageName="portfolio-page"
         category="portfolio"
