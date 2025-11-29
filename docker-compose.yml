@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_SITE_URL=https://risin.com
+    volumes:
+      - .:/app
+      - /app/node_modules
+    restart: unless-stopped

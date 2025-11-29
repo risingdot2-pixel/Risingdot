@@ -1,0 +1,197 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Light theme defaults */
+  --color-primary: #2563eb;
+  --color-secondary: #7C3AED;
+  --color-accent: #0D9488;
+  --color-background: #ffffff;
+  --color-surface: #f8fafc;
+  --color-text: #0f172a;
+  --color-text-secondary: #475569;
+  --color-border: #e2e8f0;
+  --color-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
+  /* Animation-specific colors */
+  --cursor-color: #4f46e5;
+  --cursor-glow: rgba(79, 70, 229, 0.5);
+  --particle-color-1: #4f46e5;
+  --particle-color-2: #2563eb;
+  --particle-color-3: #0d9488;
+
+  color-scheme: light;
+}
+
+.dark {
+  /* Dark theme overrides */
+  --color-primary: #3b82f6;
+  --color-secondary: #8b5cf6;
+  --color-accent: #14b8a6;
+  --color-background: #0f172a;
+  --color-surface: #1e293b;
+  --color-text: #f1f5f9;
+  --color-text-secondary: #94a3b8;
+  --color-border: #334155;
+  --color-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.25);
+
+  /* Animation-specific dark colors */
+  --cursor-color: #8b5cf6;
+  --cursor-glow: rgba(139, 92, 246, 0.5);
+  --particle-color-1: #8b5cf6;
+  --particle-color-2: #3b82f6;
+  --particle-color-3: #14b8a6;
+
+  color-scheme: dark;
+}
+
+.theme-transitioning {
+  transition: background-color 0.8s ease;
+}
+
+/* Custom scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c7d2fe;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a5b4fc;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Focus styles for accessibility */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --color-text: #000000;
+    --color-background: #ffffff;
+    --color-border: #000000;
+    --color-primary: #000000;
+  }
+
+  .dark {
+    --color-text: #ffffff;
+    --color-background: #000000;
+    --color-border: #ffffff;
+    --color-primary: #ffffff;
+  }
+
+  /* Ensure all elements have sufficient contrast */
+  *,
+  *::before,
+  *::after {
+    background: var(--color-background) !important;
+    color: var(--color-text) !important;
+    border: 1px solid var(--color-border) !important;
+  }
+
+  /* Override all images to be more visible */
+  img {
+    opacity: 0.8 !important;
+    background: #ccc !important;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Forced colors mode support (Windows high contrast) */
+@media (prefers-contrast: more) {
+  :root {
+    --color-text: CanvasText;
+    --color-background: Canvas;
+  }
+}
+
+/* Animation classes */
+.animated {
+  animation-fill-mode: both;
+}
+
+.fade-in {
+  animation-name: fadeIn;
+}
+
+.slide-up {
+  animation-name: slideUp;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Accessibility utilities */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.focusable:not(:focus) {
+  clip: rect(0 0 0 0);
+  position: absolute;
+  overflow: hidden;
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+}
+
+.focusable:focus {
+  clip: auto;
+  position: static;
+  overflow: visible;
+  height: auto;
+  width: auto;
+  margin: 0;
+  padding: inherit;
+  border: inherit;
+}
