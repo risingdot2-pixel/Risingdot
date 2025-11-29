@@ -1,4 +1,3 @@
-// app/portfolio/page.tsx
 'use client';
 
 import { useMemo, useState } from 'react';
@@ -81,11 +80,13 @@ export default function PortfolioPage() {
 
   const categories = ['All', 'N8N', 'Chatbot', 'Web Design', 'WordPress', 'Shopify', 'SEO'];
 
-  const filteredProjects = useMemo(() => (
-    selectedCategory === 'All'
-      ? projects
-      : projects.filter(project => project.category === selectedCategory)
-  ), [selectedCategory]);
+const filteredProjects = useMemo(() => {
+  if (selectedCategory === 'All') {
+    return projects;
+  }
+
+  return projects.filter(project => project.category === selectedCategory);
+}, [selectedCategory]);
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
