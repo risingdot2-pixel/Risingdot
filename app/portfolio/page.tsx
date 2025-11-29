@@ -1,4 +1,3 @@
-// app/portfolio/page.tsx
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -11,7 +10,10 @@ import { AnalyticsTracker } from '@/components/monitoring/AnalyticsTracker';
 import { motion } from 'framer-motion';
 
 export default function PortfolioPage() {
+  // Hooks must be called unconditionally and in the same order on every render.
+  // Move all useState/useEffect/useTheme calls before any early returns.
   const [mounted, setMounted] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState('All');
   const { isDark } = useTheme();
 
   useEffect(() => {
@@ -80,23 +82,37 @@ export default function PortfolioPage() {
     }
   ];
 
-  const [selectedCategory, setSelectedCategory] = useState('All');
   const categories = ['All', 'N8N', 'Chatbot', 'Web Design', 'WordPress', 'Shopify', 'SEO'];
 
-  const filteredProjects = selectedCategory === 'All'
-    ? projects
-    : projects.filter(project => project.category === selectedCategory);
+  const filteredProjects =
+    selectedCategory === 'All' ? projects : projects.filter((project) => project.category === selectedCategory);
+
+  const portfolioDescription =
+    "Explore our portfolio of successful digital projects. See our work in N8N Automations, Chatbot Development, Web Design, WordPress, Shopify, and SEO. Discover how we've transformed businesses with our solutions.";
+
+  const portfolioKeywords = [
+    'portfolio',
+    'case studies',
+    'web design portfolio',
+    'n8n automation examples',
+    'chatbot projects',
+    'shopify stores',
+    'wordpress sites',
+    'seo case studies',
+    'digital solutions portfolio'
+  ];
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
       <SEOHead
         title="Portfolio - Rising Dot Agency"
-        description="Explore our portfolio of successful digital projects. See our work in N8N Automations, Chatbot Development, Web Design, WordPress, Shopify, and SEO. Discover how we've transformed businesses with our solutions."
+        description={portfolioDescription}
         path="/portfolio"
         type="website"
-        keywords={['portfolio', 'case studies', 'web design portfolio', 'n8n automation examples', 'chatbot projects', 'shopify stores', 'wordpress sites', 'seo case studies', 'digital solutions portfolio']},
+        keywords={portfolioKeywords}
         author="Rising Dot Agency"
       />
+
       <AnalyticsTracker
         pageName="portfolio-page"
         category="portfolio"
@@ -126,8 +142,8 @@ export default function PortfolioPage() {
                         ? 'bg-gradient-to-r from-violet-600 to-blue-700 text-white'
                         : 'bg-gradient-to-r from-violet-500 to-blue-600 text-white'
                       : isDark
-                        ? 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                      ? 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                   }`}
                   onClick={() => setSelectedCategory(category)}
                 >
@@ -140,16 +156,18 @@ export default function PortfolioPage() {
               {filteredProjects.map((project, index) => (
                 <motion.div
                   key={project.id}
-                  className={`bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden transition-transform duration-300 hover:transform hover:-translate-y-2 group ${
+                  className={`rounded-2xl shadow-xl overflow-hidden transition-transform duration-300 hover:-translate-y-2 group ${
                     isDark ? 'bg-gradient-to-br from-gray-800 to-gray-900' : 'bg-gradient-to-br from-white to-gray-50'
                   }`}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                 >
-                  <div className={`aspect-video ${
-                    isDark ? 'bg-gradient-to-br from-gray-700 to-gray-800' : 'bg-gradient-to-br from-gray-100 to-gray-200'
-                  } flex items-center justify-center`}>
+                  <div
+                    className={`aspect-video ${
+                      isDark ? 'bg-gradient-to-br from-gray-700 to-gray-800' : 'bg-gradient-to-br from-gray-100 to-gray-200'
+                    } flex items-center justify-center`}
+                  >
                     <div className="text-center p-8">
                       <div className="text-5xl mb-4">🚀</div>
                       <h3 className="text-xl font-bold text-gray-900 dark:text-white">{project.title}</h3>
@@ -166,9 +184,7 @@ export default function PortfolioPage() {
                         <span
                           key={idx}
                           className={`px-3 py-1 text-sm rounded-full ${
-                            isDark
-                              ? 'bg-gray-700 text-gray-300'
-                              : 'bg-gray-100 text-gray-700'
+                            isDark ? 'bg-gray-700 text-gray-300' : 'bg-gray-100 text-gray-700'
                           }`}
                         >
                           {tech}
@@ -176,11 +192,9 @@ export default function PortfolioPage() {
                       ))}
                     </div>
 
-                    <button className={`w-full py-3 rounded-full font-medium ${
-                      isDark
-                        ? `bg-gradient-to-r ${project.gradient} text-white hover:opacity-90`
-                        : `bg-gradient-to-r ${project.gradient} text-white hover:opacity-90`
-                    } transition-opacity`}>
+                    <button
+                      className={`w-full py-3 rounded-full font-medium bg-gradient-to-r ${project.gradient} text-white hover:opacity-90 transition-opacity`}
+                    >
                       View Project
                     </button>
                   </div>
@@ -200,7 +214,7 @@ export default function PortfolioPage() {
             </p>
             <a
               href="/contact"
-              className="inline-block px-8 py-4 rounded-full font-bold text-lg bg-gradient-to-r from-violet-500 to-blue-600 text-white hover:shadow-lg hover:shadow-violet-500/25 transition-all duration-300"
+              className="inline-block px-8 py-4 rounded-full font-bold text-lg bg-gradient-to-r from-violet-500 to-blue-600 text-white hover:shadow-lg hover:shadow-violet-500/25 transition-all duration-200"
             >
               Start Your Project
             </a>
